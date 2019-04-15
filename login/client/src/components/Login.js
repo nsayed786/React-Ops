@@ -78,7 +78,7 @@ class Login extends Component {
                         value={this.state.password}
                         onChange={this.onChange}></input>
                     </div>
-                    <button type='submit' className='btn btn-lg btn-primary btn-block'>
+                    <button type='submit' className='btn btn-primary btn-md'>
                     Sign In
                     </button>
                   </form>

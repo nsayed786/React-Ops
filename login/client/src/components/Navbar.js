@@ -6,7 +6,7 @@ export class Navbar extends Component {
     logOut(e){
         e.preventDefault()
         localStorage.removeItem('usertoken')
-        this.props.history.push('/')
+        this.props.history.push('/login')
     }
   render() {
         const loginRegLink = (
@@ -23,10 +23,11 @@ export class Navbar extends Component {
         const userLink = (
             <ul className="navbar-nav">
                 <li className="nav-item">
-                <Link className="nav-link" to='/profile'>Dashboard</Link>
+                <Link className="nav-link" to='/profile' >Dashboard</Link>
                 </li>
                 <li className="nav-item">
-                <a href="" onClick={this.logOut.bind(this)} className="nav-link">Logout</a>
+                {/* <a href="" onClick={this.logOut.bind(this)} className="nav-link">Logout</a> */}
+                <Link className="nav-link" to='/login' onClick={this.logOut.bind(this)}>Logout</Link>
                 </li>
             </ul>
         )

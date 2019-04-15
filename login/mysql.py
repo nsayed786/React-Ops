@@ -9,6 +9,7 @@ from flask_jwt_extended import create_access_token
 import os
 from datetime import timedelta
 from flask_login import LoginManager
+from flask_cors import CORS, cross_origin
 
 
 app = Flask(__name__)
@@ -18,7 +19,7 @@ login = LoginManager(app)
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'sayedali'
-app.config['MYSQL_DATABASE_DB'] = 'sample1'
+# app.config['MYSQL_DATABASE_DB'] = 'sample1'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 
 
@@ -44,7 +45,7 @@ def registry():
     password = bcrypt.generate_password_hash(request.get_json()['password'])
     created = datetime.utcnow()
     # print(first_name)
-    query_string = "INSERT into Users (first_name, last_name, email, password, created) VALUES (%s,%s,%s,%s,%s)"
+    query_string = "INSERT into sample1.Users (first_name, last_name, email, password, created) VALUES (%s,%s,%s,%s,%s)"
     val = (first_name,last_name,email,password,created)
 
     cursor.execute (query_string, val)
@@ -71,7 +72,7 @@ def login():
     email = request.get_json ()['email']
     password = request.get_json ()['password']
     result = ""
-    query_string = "SELECT * FROM Users WHERE email = %s"
+    query_string = "SELECT * FROM sample1.Users WHERE email = %s"
     cursor.execute (query_string, (email))
     rv = cursor.fetchall ()
 
@@ -91,6 +92,27 @@ def login():
         result = jsonify({"error": "Invalid email and password"})
 
     return result
+
+@app.route('/customer_metadata', methods=['POST','GET'])
+@cross_origin()
+def customer_metadata():
+    try:
+
+        conn = mysql.connect ()
+        cursor = conn.cursor (pymysql.cursors.DictCursor)
+        dc = request.get_json ()['dc']
+
+        result = ""
+        query_string = "SELECT * FROM opconfigdb.customer_metadata WHERE hosted_datacenter = %s"
+        cursor.execute (query_string, (dc))
+        result = cursor.fetchall ()
+
+        return jsonify(result)
+        # return jsonify(rows)
+    except Exception as e:
+        print(e)
+    finally:
+        conn.close()
 
 
 if __name__ == "__main__":

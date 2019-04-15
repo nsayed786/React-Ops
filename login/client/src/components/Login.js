@@ -56,8 +56,8 @@ class Login extends Component {
       <div className='container'>
           <div className='row'>
               <div className='col-md-6 mt-5 mx-auto'>
-                  <form onValidate onSubmit={this.onSubmit}>
-                    <h1 className='h3 mb-3 font-weight-normal'>Please sign in</h1>
+                  <form  onSubmit={this.onSubmit}>
+                    <h1 className='h3 mb-3 font-weight-normal'>Sign In to Your Account</h1>
                     <h5 style={h4Style}>{this.state.errors}</h5>
                     <div className="form-group">
                         <label htmlFor="email">Email Address</label>

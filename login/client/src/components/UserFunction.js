@@ -32,3 +32,22 @@ export const login = user => {
         console.log(error)
     })
 }
+
+
+
+export const clients = client => {
+
+    
+    return axios
+    .post('/customer_metadata', {
+        dc: client.dc
+    })
+    .then(res => {
+        return res
+        // console.log(res)
+        // localStorage.setItem('usertoken', res.data.token)
+    })
+    .catch(error =>{
+        console.log(error)
+    })
+}
